@@ -6,6 +6,7 @@ import About from '@/components/AboutPage.vue';
 import book from '@/views/book.vue'
 import bookChapter from '@/views/bookChapter.vue'
 import bookContent from '@/views/bookContent.vue'
+import loginPage from '@/views/login.vue'
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ const routes = [
     name: "BookChapter",
     component: bookChapter,
     props: true
+  },
+  {
+    path: "/login",
+    name: "loginPage",
+    component: loginPage
   },
   {
     path: '/content',
