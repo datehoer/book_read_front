@@ -87,7 +87,7 @@ export default {
     },
     goToChapter(chapterId) {
       console.log('Navigating to chapter:', chapterId);
-      this.$router.push({ name: 'BookContent', query: { chapterId: chapterId } });
+      this.$router.push({ name: 'BookContent', params: { chapterId: chapterId } });
     },
     goBack(){
       this.$router.push({
