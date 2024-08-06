@@ -86,8 +86,12 @@ export default {
       });
     },
     goToChapter(chapterId) {
-      console.log('Navigating to chapter:', chapterId);
-      this.$router.push({ name: 'BookContent', params: { chapterId: chapterId } });
+      this.$router.push({
+        name: 'BookContent',
+        params: { chapterId: chapterId }
+      }).then(() => {
+        window.scrollTo(0, 0);
+      });
     },
     goBack(){
       this.$router.push({

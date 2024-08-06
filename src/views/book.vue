@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <div class="container" v-loading='loading'>
       <div v-for="record in records" :key="record.bookId" class="record-card">
         <el-image
@@ -12,6 +12,7 @@
         <div class="record-info">
           <div class="record-header">
             <span class="record-label">{{ record.bookStatus }}</span>
+            <span class="record-book-press">{{ record.bookPress }}</span>
             <span class="record-title">{{ record.bookName }}</span>
           </div>
           <div class="record-description">
@@ -30,7 +31,6 @@
         @current-change="handlePageChange">
       </el-pagination>
     </div>
-    
   </div>
 </template>
 
@@ -123,6 +123,12 @@ export default {
 }
 .record-label {
   background-color: #ff4d4f;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+.record-book-press {
+  background-color: #32aa0d;
   color: white;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
