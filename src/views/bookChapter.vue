@@ -1,6 +1,11 @@
 <template>
-  <div class="chapter">
-    <div v-loading="loging">
+  <div class="container">
+    <div v-loading="loging" class="chapter">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/book' }">书籍列表</el-breadcrumb-item>
+        <el-breadcrumb-item>章节列表</el-breadcrumb-item>
+      </el-breadcrumb>
       <el-card class="box-card">
         <div class="box-left">
           <el-image
@@ -38,9 +43,6 @@
         </ul>
       </el-card>
     </div>
-    <div class="top-right-element" @click="goBack()">
-      Go Back.
-    </div>
   </div>
 </template>
 
@@ -67,14 +69,15 @@ export default {
   },
   computed: {
     noMore () {
-      console.log("noMore worked")
       return parseInt(this.count/10) > Math.ceil(this.total/10)
     },
     disabled () {
-      console.log("disabled worked")
       return this.loading || this.noMore
     },
     bookTags() {
+      if(!this.book.bookTags){
+        return [];
+      }
       return this.book.bookTags.split(',');
     }
   },
@@ -83,8 +86,6 @@ export default {
       this.loading = true;
       getBookInfoByBookId(this.bookId).then(response => {
         this.book = response.data.data;
-        console.log(this.book)
-        this.loading = false;
       }).catch(error => {
         console.error('Error fetching data:', error);
         this.loading = false;
@@ -96,7 +97,6 @@ export default {
       this.fetchData();
     },
     load () {
-      console.log("load worked")
       list({
         pageNum: parseInt((this.count)/10),
         pageSize: this.size,
@@ -108,16 +108,18 @@ export default {
         this.total = data.total;
         this.size = data.size;
         this.count += data.size;
+        this.loading = false;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
     },
     openBookContent(chapterId){
-      this.$router.push({ name: 'BookContent', query: { chapterId: chapterId } });
-    },
-    goBack(){
       this.$router.push({
-        name: 'BookPage',
+        name: 'BookContent',
+        params: {
+          bookId: this.bookId,
+          chapterId: chapterId
+        }
       });
     }
   },

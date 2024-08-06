@@ -5,7 +5,7 @@
         <el-image
           style="width: 100px; height: 100px"
           src="https://cdn.v2ex.com/gravatar/06b5cb9dd95bb0f00a42e56faa73cfd2?s=48&d=retro"
-          :fit="fit"
+          fit="fit"
           class="record-image"
         >
         </el-image>

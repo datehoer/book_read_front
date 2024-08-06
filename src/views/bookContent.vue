@@ -1,7 +1,13 @@
 <template>
-  <div class="content-page">
-    <div v-loading="loading">
-      <el-card class="box-card">
+  <div class="container">
+    <div v-loading="loading" class="box-card">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/book' }">书籍列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/book/'+bookId }">章节列表</el-breadcrumb-item>
+        <el-breadcrumb-item>内容详情</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-card>
         <h1>{{ title }}</h1>
         <el-divider></el-divider>
         <div v-html="content.chapterContent"></div>
@@ -20,9 +26,6 @@
           @click="goToChapter(nextChapterId)"
         ></el-button>
       </div>
-    </div>
-    <div class="top-right-element" @click="goBack()">
-        Go Back.
     </div>
   </div>
 </template>
@@ -44,6 +47,7 @@ export default {
       prevChapterId: "",
       nextChapterId: "",
       bookId: "",
+      breadList: [],
     };
   },
   mounted() {
@@ -61,6 +65,7 @@ export default {
       .then(response => {
         this.content = response.data.data;
         this.bookId = this.content.bookId
+        this.loading = false;
       }).catch(error => {
         console.error('Error fetching data:', error);
       });
@@ -78,9 +83,7 @@ export default {
             this.nextChapterId = chapters[currentIndex + 1].chapterId;
           }
         }
-        this.loading = false;
       });
-      
     },
     goToChapter(chapterId) {
       console.log('Navigating to chapter:', chapterId);
@@ -99,9 +102,6 @@ export default {
 </script>
 
 <style scoped>
-.book-content-page {
-  margin: 20px;
-}
 .box-card {
   max-width: 900px;
   margin: 5rem auto;
@@ -132,15 +132,5 @@ export default {
 }
 .chapter-button.right {
   right: 15px;
-}
-.top-right-element {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  z-index: 9999;
-  background-color: lightblue;
-  padding: 10px;
-  border: 1px solid #000;
-  cursor: pointer;
 }
 </style>
